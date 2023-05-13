@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WPF_MVVM.Model
 {
-    internal class Student
+    internal class Student : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
