@@ -5,25 +5,70 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WPF_MVVM.Model;
 
 namespace WPF_MVVM.ViewModel
 {
     internal class StudentViewModel : INotifyPropertyChanged
     {
-        List<Student> students;
+        public List<Student> students;
 
-        public StudentViewModel()
+        private Student selectedStudent;
+
+        private Commands addCommand;
+        private Commands removeCommand;
+        private Commands copyCommand;
+
+        public Student SelectedStudent
         {
-            students = new List<Student>
+            get { return selectedStudent; }
+            set
             {
-                new Student(1, "Василий", "Пупкин", 18, 10.1),
-                new Student(1, "Петр", "Бубкин", 17, 10.3),
-                new Student(1, "Александр", "Мамонов", 19, 11),
-                new Student(1, "Олег", "Скрипка", 20, 9.4),
-                new Student(1, "Сергей", "Бобров", 18, 8.7),
-            };
+                selectedStudent = value;
+                OnPropertyChanget("SelectedStudent");
+            }
         }
+
+        public Commands AddCommand
+        {
+            get
+            {
+                return addCommand ??
+                    (addCommand = new Commands(obj =>
+                    {
+                        Student student = new Student();
+                        students.Insert(0, student);
+                        selectedStudent = student;
+                    }));
+            }
+        }
+
+        public Commands RemoveCommand
+        {
+            get
+            {
+                return removeCommand ?? (removeCommand = new Commands(obj => students.Remove(selectedStudent)));
+            }
+        }
+
+        public Commands CopyCommand
+        {
+            get
+            {
+                return copyCommand ??
+                    (copyCommand = new Commands(obj =>
+                    {
+                        Student student = new Student(
+                            selectedStudent.Id, selectedStudent.FirstName, selectedStudent.LastName, selectedStudent.Age, selectedStudent.GPA);
+                        students.Insert(0, student);
+                        selectedStudent = student;
+                    }));
+            }
+        }
+
+        public StudentViewModel() => students = StudentsDataBase.GetAllStudents();
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanget([CallerMemberName] string prop = "")
