@@ -12,13 +12,18 @@ namespace WPF_MVVM.ViewModel
 {
     internal class StudentViewModel : INotifyPropertyChanged
     {
-        public List<Student> students;
+        public List<Student> Students { get; set; }
 
         private Student selectedStudent;
 
         private Commands addCommand;
         private Commands removeCommand;
         private Commands copyCommand;
+
+        public StudentViewModel()// => students = StudentsDataBase.GetAllStudents();
+        {
+            Students = StudentsDataBase.GetAllStudents();
+        }
 
         public Student SelectedStudent
         {
@@ -38,7 +43,7 @@ namespace WPF_MVVM.ViewModel
                     (addCommand = new Commands(obj =>
                     {
                         Student student = new Student();
-                        students.Insert(0, student);
+                        Students.Insert(0, student);
                         selectedStudent = student;
                     }));
             }
@@ -48,7 +53,7 @@ namespace WPF_MVVM.ViewModel
         {
             get
             {
-                return removeCommand ?? (removeCommand = new Commands(obj => students.Remove(selectedStudent)));
+                return removeCommand ?? (removeCommand = new Commands(obj => Students.Remove(selectedStudent)));
             }
         }
 
@@ -61,13 +66,13 @@ namespace WPF_MVVM.ViewModel
                     {
                         Student student = new Student(
                             selectedStudent.Id, selectedStudent.FirstName, selectedStudent.LastName, selectedStudent.Age, selectedStudent.GPA);
-                        students.Insert(0, student);
+                        Students.Insert(0, student);
                         selectedStudent = student;
                     }));
             }
         }
 
-        public StudentViewModel() => students = StudentsDataBase.GetAllStudents();
+        
 
 
         public event PropertyChangedEventHandler PropertyChanged;

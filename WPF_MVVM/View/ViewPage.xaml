@@ -5,10 +5,67 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF_MVVM.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="900"
       Title="ViewPage">
-
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+    
     <Grid Background="AliceBlue">
-        <TextBlock Text="Hello student" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.8*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.4*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="textBlock" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+
+        <ListView Grid.Row="1" Grid.RowSpan="2" SelectedItem="{Binding SelectedStudent}" ItemsSource="{Binding Students}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Path=FirstName}"/>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Path=LastName}"/>
+                    <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Path=Age}"/>
+                    <GridViewColumn Header="Средний балл" DisplayMemberBinding="{Binding Path=GPA}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="Поля для изменений выбранного студента" Width="250" TextAlignment="Center"  Margin="10"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Id:" Width="80" TextAlignment="Right"/>
+                <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Имя:" Width="80" TextAlignment="Right"/>
+                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Фамилия:" Width="80" TextAlignment="Right"/>
+                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Возраст:" Width="80" TextAlignment="Right"/>
+                <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Средний балл:" Width="80" TextAlignment="Right"/>
+                <TextBox Text="{Binding GPA, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
