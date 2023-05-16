@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WPF_MVVM.Model
 {
-    internal class StudentsDataBase
+    internal class StudentsDataBase 
     {
-        static List<Student> students = new List<Student>
+        private static List<Student> students = new List<Student>
         {
             new Student(1, "Василий", "Пупкин", 18, 10.1),
             new Student(2, "Петр", "Бубкин", 17, 10.3),
@@ -17,21 +20,10 @@ namespace WPF_MVVM.Model
             new Student(5, "Сергей", "Бобров", 18, 8.7)
         };
 
-        public static List<Student> GetAllStudents() => students;
+        public static List<Student> Students { get { return students; } set { students = value; } }
 
-        public static void AddStudent()
-        {
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
-        }
-
-        public static void RemoveStudent()
-        {
-
-        }
-
-        public static void CopyStudent()
-        {
-
-        }
+        public static List<Student> GetAllStudents() => Students;
     }
 }

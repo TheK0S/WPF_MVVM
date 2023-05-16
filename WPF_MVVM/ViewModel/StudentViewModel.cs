@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -20,10 +22,10 @@ namespace WPF_MVVM.ViewModel
         private Commands removeCommand;
         private Commands copyCommand;
 
-        public StudentViewModel()// => students = StudentsDataBase.GetAllStudents();
-        {
-            Students = StudentsDataBase.GetAllStudents();
-        }
+        public StudentViewModel() => Students = StudentsDataBase.GetAllStudents();
+
+        event NotifyCollectionChangedEventHandler? CollectionChanged;
+
 
         public Student SelectedStudent
         {
@@ -44,7 +46,7 @@ namespace WPF_MVVM.ViewModel
                     {
                         Student student = new Student();
                         Students.Insert(0, student);
-                        selectedStudent = student;
+                        SelectedStudent = student;
                     }));
             }
         }
@@ -53,7 +55,7 @@ namespace WPF_MVVM.ViewModel
         {
             get
             {
-                return removeCommand ?? (removeCommand = new Commands(obj => Students.Remove(selectedStudent)));
+                return removeCommand ?? (removeCommand = new Commands(obj => Students.Remove(SelectedStudent)));
             }
         }
 
@@ -65,9 +67,9 @@ namespace WPF_MVVM.ViewModel
                     (copyCommand = new Commands(obj =>
                     {
                         Student student = new Student(
-                            selectedStudent.Id, selectedStudent.FirstName, selectedStudent.LastName, selectedStudent.Age, selectedStudent.GPA);
+                            SelectedStudent.Id, SelectedStudent.FirstName, SelectedStudent.LastName, SelectedStudent.Age, SelectedStudent.GPA);
                         Students.Insert(0, student);
-                        selectedStudent = student;
+                        SelectedStudent = student;
                     }));
             }
         }
