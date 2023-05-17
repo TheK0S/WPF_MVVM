@@ -25,8 +25,6 @@ namespace WPF_MVVM.View
         public ViewPage()
         {
             InitializeComponent();
-
-
            
             DataContext = new StudentViewModel();
         }

@@ -23,7 +23,7 @@ namespace WPF_MVVM.Model
             set 
             { 
                 id = value;
-                OnPropertyChanget("Id"); 
+                OnPropertyChanget("Id");
             }
         }     
 

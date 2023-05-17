@@ -14,7 +14,7 @@ namespace WPF_MVVM.ViewModel
 {
     internal class StudentViewModel : INotifyPropertyChanged
     {
-        public List<Student> Students { get; set; }
+        public ObservableCollection<Student> Students { get; set; }
 
         private Student selectedStudent;
 
@@ -23,9 +23,6 @@ namespace WPF_MVVM.ViewModel
         private Commands copyCommand;
 
         public StudentViewModel() => Students = StudentsDataBase.GetAllStudents();
-
-        event NotifyCollectionChangedEventHandler? CollectionChanged;
-
 
         public Student SelectedStudent
         {
@@ -72,9 +69,7 @@ namespace WPF_MVVM.ViewModel
                         SelectedStudent = student;
                     }));
             }
-        }
-
-        
+        }        
 
 
         public event PropertyChangedEventHandler PropertyChanged;

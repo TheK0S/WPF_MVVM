@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace WPF_MVVM.Model
 {
     internal class StudentsDataBase 
     {
-        private static List<Student> students = new List<Student>
+        private static ObservableCollection<Student> students = new ObservableCollection<Student>
         {
             new Student(1, "Василий", "Пупкин", 18, 10.1),
             new Student(2, "Петр", "Бубкин", 17, 10.3),
@@ -20,10 +21,6 @@ namespace WPF_MVVM.Model
             new Student(5, "Сергей", "Бобров", 18, 8.7)
         };
 
-        public static List<Student> Students { get { return students; } set { students = value; } }
-
-        public event NotifyCollectionChangedEventHandler? CollectionChanged;
-
-        public static List<Student> GetAllStudents() => Students;
+        public static ObservableCollection<Student> GetAllStudents() => students;
     }
 }

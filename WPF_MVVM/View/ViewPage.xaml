@@ -75,7 +75,7 @@
 
         <StackPanel Grid.Row="2" Grid.Column="1">
             <Button Content="Добавить" Command="{Binding AddCommand}"/>
-            <Button Content="Удалить" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedStudent}"/>
+            <Button Content="Удалить" Command="{Binding RemoveCommand}"/>
             <Button Content="Добавить копированием" Command="{Binding CopyCommand}"/>
         </StackPanel>
     </Grid>
